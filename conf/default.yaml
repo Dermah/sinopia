@@ -9,14 +9,6 @@
 # path to a directory with all packages
 storage: ./storage
 
-web:
-  # web interface is disabled by default in 0.x, will be enabled soon in 1.x
-  # when all its issues will be fixed
-  #
-  # set this to `true` if you want to experiment with web ui now;
-  # this has a lot of issues, e.g. no auth yet, so use at your own risk
-  #enable: true
-
 auth:
   htpasswd:
     file: ./htpasswd
@@ -30,16 +22,22 @@ uplinks:
     url: https://registry.npmjs.org/
 
 packages:
+  '@*/*':
+    # scoped packages
+    allow_access: $all
+    allow_publish: $authenticated
+
   '*':
     # allow all users (including non-authenticated users) to read and
     # publish all packages
     #
     # you can specify usernames/groupnames (depending on your auth plugin)
     # and three keywords: "$all", "$anonymous", "$authenticated"
-    allow_access: $authenticated
+    allow_access: $all
 
-    # allow 'admin' to publish packages
-    allow_publish: $all
+    # allow all known users to publish packages
+    # (anyone can register by default, remember?)
+    allow_publish: $authenticated
 
     # if package is not available locally, proxy requests to 'npmjs' registry
     proxy: npmjs

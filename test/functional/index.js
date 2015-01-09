@@ -41,7 +41,7 @@ describe('Func', function() {
     async.map([server, server2], function(server, cb) {
       server.auth('test', 'test', function(res, body) {
         assert.equal(res.statusCode, 201)
-        assert.notEqual(body.ok.indexOf('"test"'), -1)
+        assert.notEqual(body.ok.indexOf("'test'"), -1)
         cb()
       })
     }, cb)
@@ -59,6 +59,7 @@ describe('Func', function() {
   require('./nullstorage')()
   require('./race')()
   require('./racycrash')()
+  require('./scoped')()
   require('./security')()
   require('./adduser')()
   require('./addtag')()
